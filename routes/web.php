@@ -14,5 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+//    echo "<pre>";
+    \Illuminate\Support\Facades\Artisan::call('scrape:hn');
+
+    \Illuminate\Support\Facades\Artisan::output();
+    return;
 });
