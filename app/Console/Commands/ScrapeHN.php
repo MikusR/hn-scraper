@@ -61,7 +61,18 @@ class ScrapeHN extends Command
                 echo "<a href=\"$url\">$title</a>";
                 echo "</br>";
             }
-
+            if ($element->childNodes->count() === 2) {
+                $rowCrawler = new Crawler($element);
+                $age = $rowCrawler->filterXPath('//span[@class="age"]')->attr('title');
+//                dd($age);
+//                var_dump(htmlspecialchars($title));
+                $score = $rowCrawler->filterXPath('//span[@class="score"]')->text();
+                echo "<span>($score) $age</span>";
+                echo "</br>";
+            }
+            if ($element->childNodes->count() === 6) {
+                break;
+            }
 
 ////            dd($element->ownerDocument->saveHTML($element));
 
