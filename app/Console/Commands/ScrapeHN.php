@@ -19,7 +19,7 @@ class ScrapeHN extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Get data from Hacker News website by scraping html';
 
     /**
      * Create a new command instance.
@@ -43,8 +43,20 @@ class ScrapeHN extends Command
 //        return $crawler;
 //        dd($crawler->filterXPath('//tr[@class="athing"]/..')->children());
         echo "<pre>";
-//        dd($crawler->filterXPath('//tr[@class="athing"]/..')->children()->count());
-        foreach ($crawler->filterXPath('//tr[@class="athing"]/..')->children() as $element) {
+//        #hnmain > tbody > tr:nth-child(3) > td > table > tbody
+        $test = $crawler->filter('#hnmain > tbody > tr:nth-child(3) > td > table > tbody > tr');
+//        try {
+//            $test = $crawler->filterXPath('//*[@id="hnmain"]/tbody/tr[3]/td/table/tbody')->html();
+//        } catch (\Exception$e) {
+//
+//        }
+        foreach ($test as $element) {
+            var_dump($element->nodeValue);
+        }
+        dd($test);
+        dd($test->ownerDocument->saveHTML($test));
+//        dd($crawler->filterXPath('/html/body/center/table/tbody/tr[3]/td/table/tbody')->children()->count());
+        foreach ($crawler->filterXPath('//*[@id="hnmain"]/tbody/tr[3]/td/table/tbody')->children() as $element) {
 //            dd($element->ownerDocument->saveHTML($element));
 //            dd($element->childNodes);
 
@@ -52,7 +64,7 @@ class ScrapeHN extends Command
 //            foreach ($element->childNodes as $child) {
 //                var_dump($child->nodeValue);
 //            }
-//            var_dump($element->childNodes->count());
+            var_dump($element->childNodes->count());
             if ($element->childNodes->count() === 5) {
                 $rowCrawler = new Crawler($element);
                 $title = htmlspecialchars($rowCrawler->filterXPath('//span[@class="titleline"]/a')->text());
