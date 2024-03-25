@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Link;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('api/v0/first', function () {
 //    echo "<pre>";
-    \Illuminate\Support\Facades\Artisan::call('scrape:fromapi');
+//    \Illuminate\Support\Facades\Artisan::call('scrape:fromapi');
 
-    \Illuminate\Support\Facades\Artisan::output();
-    return;
+//    \Illuminate\Support\Facades\Artisan::output();
+//    return Link::orderBy('points', 'desc')->paginate(10);
+    return response()->json(Link::first());
+});
+Route::get('/welcome', function () {
+    return view('welcome');
 });
