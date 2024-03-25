@@ -10,6 +10,9 @@ class Link extends Model
     use HasFactory;
 
     protected $primaryKey = 'article_id';
+    protected $casts = [
+        'deleted' => 'boolean',
+    ];
     protected $fillable = [
         'title',
         'url',
