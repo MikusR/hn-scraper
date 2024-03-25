@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
 //    echo "<pre>";
-    \Illuminate\Support\Facades\Artisan::call('scrape:hn');
+    \Illuminate\Support\Facades\Artisan::call('scrape:fromapi');
 
     \Illuminate\Support\Facades\Artisan::output();
     return;
