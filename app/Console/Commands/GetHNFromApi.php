@@ -46,12 +46,21 @@ class GetHNFromApi extends Command
         foreach ($data as $row) {
             try {
                 $link = Link::findOrFail($row);
-                if ($link->deleted === False) {
+
+                if ($link->deleted === false) {
+                    $scoreBefore = $link->points;
                     $this->updateScore($link);
+                    $test = $link->points - $scoreBefore;
+                    if ($test > 0) {
+                        echo $link->title . "\n";
+                        echo "score changed by: " . ($test) . "\n";
+                    }
+
                 }
             } catch (ModelNotFoundException $e) {
                 $story = $this->makeModel($this->getStory($row));
                 $story->save();
+                echo "New article: $story->title\n";
             }
             usleep(30000);
         }
