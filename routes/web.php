@@ -22,6 +22,10 @@ Route::get('api/v0/first', function () {
 //    return Link::orderBy('points', 'desc')->paginate(10);
     return response()->json(Link::first());
 });
+Route::get('api/v0/last', function () {
+
+    return response()->json(Link::latest()->first());
+});
 Route::get('/welcome', function () {
     return view('welcome');
 });

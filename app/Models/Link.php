@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +13,7 @@ class Link extends Model
     protected $primaryKey = 'article_id';
     protected $casts = [
         'deleted' => 'boolean',
+        'date' => 'datetime',
     ];
     protected $fillable = [
         'title',
@@ -19,4 +21,11 @@ class Link extends Model
         'points',
         'date',
     ];
+
+    public function scopeSearch($query, $keywords)
+    {
+        return $query->where('title', 'LIKE', '%' . $keywords . '%');
+    }
+
+
 }
