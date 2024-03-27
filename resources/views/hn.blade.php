@@ -10,7 +10,10 @@
 </head>
 <body>
 <div id="app">
-    @{{ sveiciens }} @{{ sveiciens.toUpperCase() }}
+    <p>
+        <input type="text" v-model="sveiciens">
+    </p>
+    @{{ sveiciens }} @{{ sveiciens.length }}
 </div>
 <script>
 
@@ -20,6 +23,11 @@
             return {
                 sveiciens: "Hello mikus"
             };
+        },
+        mounted() {
+            setTimeout(() => {
+                this.sveiciens = "Hello daugiau"
+            }, 3000)
         }
     }).mount('#app');
 </script>
