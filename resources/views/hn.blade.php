@@ -13,10 +13,7 @@
     <section>
         <h2 class="font-bold mb-2">tasks</h2>
         <ul>
-            <li>task 1 <input type="checkbox"></li>
-            <li>2. task <input type="checkbox"></li>
-            <li>task number 3 <input type="checkbox"></li>
-            <li>4th task <input type="checkbox"></li>
+            <li v-for="task in assignments">@{{ task.name }}</li>
         </ul>
 
     </section>

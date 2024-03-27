@@ -14,4 +14,10 @@ mix.js('resources/js/app.js', 'public/js')
     .vue({version: 3})
     .postCss('resources/css/app.css', 'public/css', [
         require("tailwindcss"),
-    ]);
+    ]).extract(['vue']);
+
+mix.define({
+    __VUE_OPTIONS_API__: false,
+    __VUE_PROD_DEVTOOLS__: true,
+    __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false
+});
