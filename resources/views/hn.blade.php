@@ -7,13 +7,29 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://unpkg.com/vue@3"></script>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            display: grid;
+            place-items: center;
+        }
+
+        .text-red {
+            color: red;
+        }
+
+        .text-green {
+            color: green;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
-    <p>
-        <input type="text" v-model="sveiciens">
-    </p>
-    @{{ sveiciens }} @{{ sveiciens.length }}
+    <button v-bind:class="buttonClasses">test button</button>
+
 </div>
 <script>
 
@@ -21,14 +37,11 @@
     Vue.createApp({
         data() {
             return {
-                sveiciens: "Hello mikus"
+                buttonClasses: 'text-green'
             };
-        },
-        mounted() {
-            setTimeout(() => {
-                this.sveiciens = "Hello daugiau"
-            }, 3000)
         }
+
+
     }).mount('#app');
 </script>
 {{--<script src="{{ mix('js/app.js') }}"></script>--}}
