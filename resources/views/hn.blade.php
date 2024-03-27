@@ -6,47 +6,23 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script src="https://unpkg.com/vue@3"></script>
-    <style>
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            display: grid;
-            place-items: center;
-        }
-
-        .text-red {
-            color: red;
-        }
-
-        .text-green {
-            color: green;
-        }
-    </style>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body class="min-h-screen grid place-items-center">
 <div id="app">
-    <button :class="active ? 'text-red' : 'text-green'" @click="toggle">test button</button>
+    <section>
+        <h2 class="font-bold mb-2">tasks</h2>
+        <ul>
+            <li>task 1 <input type="checkbox"></li>
+            <li>2. task <input type="checkbox"></li>
+            <li>task number 3 <input type="checkbox"></li>
+            <li>4th task <input type="checkbox"></li>
+        </ul>
 
+    </section>
+    <button class="bg-green-500 rounded" @click="sendRequest">Send Request</button>
 </div>
-<script>
 
-
-    Vue.createApp({
-        data() {
-            return {
-                active: false
-            };
-        },
-        methods: {
-            toggle() {
-                this.active = !this.active;
-            }
-        }
-    }).mount('#app');
-</script>
-{{--<script src="{{ mix('js/app.js') }}"></script>--}}
+<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
