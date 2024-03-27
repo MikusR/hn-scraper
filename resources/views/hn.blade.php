@@ -28,7 +28,7 @@
 </head>
 <body>
 <div id="app">
-    <button :class="buttonClasses">test button</button>
+    <button :class="buttonClasses" v-on:click="toggle">test button</button>
 
 </div>
 <script>
@@ -39,6 +39,11 @@
             return {
                 buttonClasses: 'text-green'
             };
+        },
+        methods: {
+            toggle() {
+                this.buttonClasses = this.buttonClasses === 'text-green' ? 'text-red' : 'text-green';
+            }
         }
 
 
