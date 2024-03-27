@@ -39,7 +39,7 @@ class GetHNFromApi extends Command
      */
     public function handle()
     {
-        $url = 'https://hacker-news.firebaseio.com/v0/topstories.json';
+        $url = 'https://hacker-news.firebaseio.com/v0/newstories.json';
         $json = file_get_contents($url);
         $data = json_decode($json, true);
 

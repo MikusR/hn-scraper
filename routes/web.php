@@ -29,3 +29,7 @@ Route::get('api/v0/last', function () {
 Route::get('/welcome', function () {
     return view('welcome');
 });
+Route::get('/', function () {
+
+    return view('hn');
+});
