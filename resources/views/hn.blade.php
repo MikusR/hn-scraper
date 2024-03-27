@@ -28,7 +28,7 @@
 </head>
 <body>
 <div id="app">
-    <button v-bind:class="buttonClasses">test button</button>
+    <button :class="buttonClasses">test button</button>
 
 </div>
 <script>
