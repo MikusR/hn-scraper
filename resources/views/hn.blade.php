@@ -28,7 +28,7 @@
 </head>
 <body>
 <div id="app">
-    <button :class="active ? 'text-red' : 'text-green'" v-on:click="toggle">test button</button>
+    <button :class="active ? 'text-red' : 'text-green'" @click="toggle">test button</button>
 
 </div>
 <script>
