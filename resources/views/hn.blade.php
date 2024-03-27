@@ -28,7 +28,7 @@
 </head>
 <body>
 <div id="app">
-    <button :class="buttonClasses" v-on:click="toggle">test button</button>
+    <button :class="active ? 'text-red' : 'text-green'" v-on:click="toggle">test button</button>
 
 </div>
 <script>
@@ -37,16 +37,14 @@
     Vue.createApp({
         data() {
             return {
-                buttonClasses: 'text-green'
+                active: false
             };
         },
         methods: {
             toggle() {
-                this.buttonClasses = this.buttonClasses === 'text-green' ? 'text-red' : 'text-green';
+                this.active = !this.active;
             }
         }
-
-
     }).mount('#app');
 </script>
 {{--<script src="{{ mix('js/app.js') }}"></script>--}}
