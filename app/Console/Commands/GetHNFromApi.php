@@ -45,9 +45,9 @@ class GetHNFromApi extends Command
 
         foreach ($data as $row) {
             try {
-                $link = Link::findOrFail($row);
+                $link = Link::withTrashed()->findOrFail($row);
 
-                if ($link->deleted === false) {
+                if ($link->trashed() === false) {
                     $scoreBefore = $link->points;
                     $this->updateScore($link);
                     $test = $link->points - $scoreBefore;

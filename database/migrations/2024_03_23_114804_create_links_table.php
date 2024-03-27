@@ -19,7 +19,7 @@ class CreateLinksTable extends Migration
             $table->string('url');
             $table->integer('points');
             $table->dateTime('date');
-            $table->boolean('deleted')->default(false);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

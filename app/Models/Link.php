@@ -5,10 +5,12 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Link extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $primaryKey = 'article_id';
     protected $casts = [
@@ -21,6 +23,13 @@ class Link extends Model
         'points',
         'date',
     ];
+
+//    public function delete(): void
+//    {
+//        $this->deleted_at = now();
+//        $this->deleted_by = Auth::user()->id;
+//        $this->save();
+//    }
 
     public function scopeSearch($query, $keywords)
     {
