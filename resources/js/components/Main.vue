@@ -47,6 +47,7 @@ const tableData = ref([]);
 
 const options = ref({
     order: [0, 'desc'],
+    select: true
 });
 const tableColumns = ref([
         {data: 'points', width: '10%'},
