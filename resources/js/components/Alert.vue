@@ -1,15 +1,9 @@
-<template>
-    <div class="alert" v-text="message"></div>
-</template>
+<script setup>
+import {ref} from 'vue';
 
-<script>
-export default {
-    data() {
-        return {
-            message: 'I am an alert.'
-        };
-    }
-};
+const count = ref(0);
+const message = ref("Hello");
+
 </script>
 
 <style>
@@ -17,3 +11,18 @@ export default {
     background: red;
 }
 </style>
+<template>
+    <div class="alert" v-text="message"></div>
+    <div class="alert">ff {{ count }}</div>
+    {{ message }}
+    <div class="row">
+        <div class="offset-sm-4 col-sm-4">
+            <button class="btn btn-primary btn-lg col-12 mt-5"
+                    @click="count++"
+            >
+                <i class="bi bi-plus-circle"></i>
+                You clicked me {{ count }} times.
+            </button>
+        </div>
+    </div>
+</template>
