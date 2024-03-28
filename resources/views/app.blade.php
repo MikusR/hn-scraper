@@ -11,10 +11,10 @@
 </head>
 <body class="min-h-screen grid place-items-center">
 <div id="app">
-    <section>
+    <section v-view="tasksToDo.length">
         <h2 class="font-bold mb-2">tasks to do</h2>
         <ul>
-            <li v-for="task in assignments.filter(a => !a.complete)" :key="task.id">
+            <li v-for="task in tasksToDo" :key="task.id">
                 <label>@{{ task.name }}
                     <input type="checkbox" v-model="task.complete">
                 </label>
@@ -23,10 +23,10 @@
         </ul>
 
     </section>
-    <section v-if="assignments.filter(a => a.complete).length" class="mt-8">
+    <section v-if="completedTasks.length" class="mt-8">
         <h2 class="font-bold mb-2">Finisht tasks</h2>
         <ul>
-            <li v-for="task in assignments.filter(a => a.complete)" :key="task.id">
+            <li v-for="task in completedTasks" :key="task.id">
                 <label>@{{ task.name }}
                     <input type="checkbox" v-model="task.complete">
                 </label>
@@ -59,6 +59,14 @@
                 axios.get('/api/v0/last').then((response) => {
                     console.log(response.data.title);
                 });
+            }
+        },
+        computed: {
+            completedTasks() {
+                return this.assignments.filter(task => task.complete);
+            },
+            tasksToDo() {
+                return this.assignments.filter(task => !task.complete);
             }
         },
 
