@@ -12,9 +12,21 @@
 <body class="min-h-screen grid place-items-center">
 <div id="app">
     <section>
-        <h2 class="font-bold mb-2">tasks</h2>
+        <h2 class="font-bold mb-2">tasks to do</h2>
         <ul>
-            <li v-for="task in assignments">
+            <li v-for="task in assignments.filter(a => !a.complete)" :key="task.id">
+                <label>@{{ task.name }}
+                    <input type="checkbox" v-model="task.complete">
+                </label>
+
+            </li>
+        </ul>
+
+    </section>
+    <section>
+        <h2 class="font-bold mt-8">Finisht tasks</h2>
+        <ul>
+            <li v-for="task in assignments.filter(a => a.complete)" :key="task.id">
                 <label>@{{ task.name }}
                     <input type="checkbox" v-model="task.complete">
                 </label>
@@ -35,10 +47,10 @@
         data() {
             return {
                 assignments: [
-                    {name: 'task 1', complete: false},
-                    {name: '2. task', complete: false},
-                    {name: 'task number 3', complete: false},
-                    {name: '4th task', complete: false}
+                    {name: 'task 1', complete: false, id: 1},
+                    {name: '2. task', complete: false, id: 2},
+                    {name: 'task number 3', complete: false, id: 3},
+                    {name: '4th task', complete: false, id: 4}
                 ],
             }
         },
@@ -49,6 +61,7 @@
                 });
             }
         },
+
         mounted() {
             this.sendRequest();
         }
