@@ -23,7 +23,7 @@
         </ul>
 
     </section>
-    <section v-show="assignments.filter(a => a.complete).length" class="mt-8">
+    <section v-if="assignments.filter(a => a.complete).length" class="mt-8">
         <h2 class="font-bold mb-2">Finisht tasks</h2>
         <ul>
             <li v-for="task in assignments.filter(a => a.complete)" :key="task.id">
