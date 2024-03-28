@@ -2,7 +2,7 @@
     <div class="container">
         <h1>HN stories</h1>
 
-        <DataTable :data="tableData" :columns="tableColumns" class="table table-hover table-striped"
+        <DataTable :data="tableData" :columns="tableColumns" :options="options" class="table table-hover table-striped"
                    width="100%">
             <thead>
             <tr>
@@ -44,6 +44,10 @@ const props = defineProps({
 })
 // console.log(props['fetchUrl']);
 const tableData = ref([]);
+
+const options = ref({
+    order: [0, 'desc'],
+});
 const tableColumns = ref([
         {data: 'points', width: '10%'},
         {
@@ -65,9 +69,8 @@ const tableColumns = ref([
 async function fetchData(url) {
     const response = await axios.get(url)
     if (response.status === 200) {
-        console.log(response.data.data);
+
         tableData.value = response.data;
-        console.log(tableData);
     }
 }
 

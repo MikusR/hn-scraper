@@ -27,7 +27,7 @@ Route::get('api/v0/last', function () {
     return response()->json(Link::latest()->first());
 });
 Route::get('api/v0/index', function () {
-    return response()->json(Link::all());
+    return response()->json(Link::orderBy('points', 'desc')->get());
 })->name('index');
 Route::get('/welcome', function () {
     return view('welcome');
