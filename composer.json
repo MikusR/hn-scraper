@@ -9,13 +9,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.4",
+        "ext-json": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "itsgoingd/clockwork": "^5.2",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "symfony/browser-kit": "^5.4",
-        "ext-json": "*"
+        "symfony/browser-kit": "^5.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
