@@ -13,7 +13,7 @@ class GetHNFromApi extends Command
      *
      * @var string
      */
-    protected $signature = 'scrape:fromapi';
+    protected $signature = 'scrape:fromapi {type=best}';
 
     /**
      * The console command description.
@@ -39,7 +39,19 @@ class GetHNFromApi extends Command
      */
     public function handle()
     {
-        $url = 'https://hacker-news.firebaseio.com/v0/topstories.json';
+        $type = $this->argument('type');
+        switch ($type) {
+            case 'top':
+                $url = 'https://hacker-news.firebaseio.com/v0/topstories.json';
+                break;
+            case 'new':
+                $url = 'https://hacker-news.firebaseio.com/v0/newstories.json';
+                break;
+            default:
+                $url = 'https://hacker-news.firebaseio.com/v0/beststories.json';
+                break;
+        }
+        
         $json = file_get_contents($url);
         $data = json_decode($json, true);
 
