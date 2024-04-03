@@ -46,10 +46,10 @@ If using sqlite
 touch database/database.sqlite
 ```
 
-make fresh database
+Run artisan migrate to database tables
 
 ```bash
-php artisan make:fresh
+php artisan migrate
 ```
 
 run
