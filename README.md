@@ -1,4 +1,4 @@
-# HN-Scrapper (or rather from the [official api](https://github.com/HackerNews/API))
+# HN-Scraper (or rather from the [official api](https://github.com/HackerNews/API))
 
 Application for getting stories from HN and displaying them in a [datatable](https://datatables.net/) as a Vue 3
 component.
@@ -15,7 +15,7 @@ component.
 clone repository
 
 ```bash
-$ git clone https://github.com/MikusR/hn-scrapper.git
+$ git clone https://github.com/MikusR/hn-scraper.git
 ```
 
 use Composer to get dependencies
