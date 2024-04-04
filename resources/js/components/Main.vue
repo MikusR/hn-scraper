@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h1>HN stories</h1>
+        <h1 class="text-center bg-primary">HN stories</h1>
 
         <DataTable :data="tableData" :columns="tableColumns" :options="options" class="table table-hover table-striped"
                    width="100%">
@@ -83,13 +83,12 @@ async function fetchData(url) {
 //     return value.toUpperCase()
 // })
 onMounted(() => {
-    console.log(props.fetchUrl);
     fetchData(props.fetchUrl);
 });
 
 
 </script>
 <style>
-@import 'bootstrap';
+
 @import 'datatables.net-bs5';
 </style>
