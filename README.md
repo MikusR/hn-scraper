@@ -9,6 +9,7 @@ component.
 
 - PHP 7.4
 - MySQL (tested on 8.0.35) or SQLite
+- Node.js 20
 
 ## Install
 
@@ -28,6 +29,12 @@ use npm to get dependencies for Vue
 
 ```bash
 $ npm install
+```
+
+build assets
+
+```bash
+$ npm run production
 ```
 
 copy .env.example to .env
