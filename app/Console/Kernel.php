@@ -15,7 +15,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->command('scrape:fromapi top')->everyThreeHours();
         $schedule->command('scrape:fromapi best')->everyTwoHours();
         $schedule->command('scrape:fromapi new')->HourlyAt(32);
