@@ -53,7 +53,7 @@ If using sqlite
 touch database/database.sqlite
 ```
 
-Run artisan migrate to database tables
+Run artisan migrate to create database tables
 
 ```bash
 php artisan migrate
@@ -65,3 +65,32 @@ run
 php artisan serve
 ```
 
+add cron job to run schedule
+
+```bash
+crontab -e
+```
+
+```cronexp
+* * * * * cd /{your path} && php artisan schedule:run >> /dev/null 2>&1
+```
+
+## Commands
+
+App comes with different ways to get data
+
+for example
+
+```bash
+php artisan scrape:fromapi
+```
+
+uses official HN api to get links
+
+command by default fetches `best` stories. There are also `new` and `top` to be used like this
+
+```bash
+php artisan scrape:fromapi new
+```
+
+Default schedule gets `new` stories every hour and `best` and `top` every couple hours
