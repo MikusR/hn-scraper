@@ -1,5 +1,7 @@
 # HN-Scraper (or rather from the [official api](https://github.com/HackerNews/API))
 
+[Test instance](https://hn.mikusr.info)
+
 Application for getting stories from HN and displaying them in a [datatable](https://datatables.net/) as a Vue 3
 component.
 
