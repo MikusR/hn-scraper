@@ -12,15 +12,6 @@
                 </th>
             </tr>
             </thead>
-            <!--        <tbody>-->
-            <!--        <tr class="" v-if="tableData.length === 0">-->
-            <!--            <td class="" :colspan="columns.length + 1">No data found.</td>-->
-            <!--        </tr>-->
-            <!--        <tr v-for="(data, key1) in tableData" :key="data.id" class="" v-else>-->
-            <!--            <td v-for="(value, key) in data">{{ value }}</td>-->
-            <!--        </tr>-->
-            <!--        </tbody>-->
-
         </DataTable>
     </div>
 
@@ -35,14 +26,12 @@ import {DataTable} from "datatables.net-vue3";
 import DataTablesCore from 'datatables.net-bs5';
 
 DataTable.use(DataTablesCore);
-// const data = ref([['a', '1', '1f'], ['b', '2', '1a']])
-// DataTable.data = data;
 
 const props = defineProps({
     fetchUrl: {type: String, required: true},
     columns: {type: Array, required: true},
 })
-// console.log(props['fetchUrl']);
+
 const tableData = ref([]);
 
 const options = ref({
@@ -75,13 +64,6 @@ async function fetchData(url) {
     }
 }
 
-// function serialNumber(key) {
-//     return key + 1;
-// }
-
-// const columnHead = computed((value) => {
-//     return value.toUpperCase()
-// })
 onMounted(() => {
     fetchData(props.fetchUrl);
 });
