@@ -16,10 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('api/v0/first', function () {
     return response()->json(Link::first());
-})->middleware('auth');
+});
 Route::get('api/v0/last', function () {
     return response()->json(Link::latest()->first());
-})->middleware('auth');
+});
 Route::get('api/v0/index', function () {
     return response()->json(Link::where('points', '>', 10)->orderBy('points', 'desc')->get());
 })->name('index')->middleware('auth');

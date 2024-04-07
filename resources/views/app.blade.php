@@ -7,8 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{--    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.tailwindcss.css" rel="stylesheet">--}}
-    {{--    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.tailwindcss.js"></script>--}}
 
 </head>
 <body class="min-h-screen grid">

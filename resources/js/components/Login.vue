@@ -9,22 +9,22 @@
                     </ul>
                 </div>
             </div>
-            <div>
+            <div class="form-row from-orange-300">
                 <label for="email">Email</label>
                 <input type="text" v-model="auth.email" name="email" id="email">
             </div>
-            <div>
+            <div class="form-row">
                 <label for="password">Password</label>
                 <input type="password" v-model="auth.password" name="password" id="password">
             </div>
-            <div>
+            <div class="form-row">
                 <button type="submit" :disabled="processing" @click="login" class="btn btn-primary btn-block">
                     {{ processing ? "Please wait" : "Login" }}
                 </button>
             </div>
             <div>
                 <label>Don't have an account?
-                    <router-link :to="{name:'register'}">Register!</router-link>
+                    <router-link :to="{ name: 'register' }">Register!</router-link>
                 </label>
             </div>
         </form>
@@ -33,7 +33,7 @@
 </template>
 <script setup>
 // import {mapActions} from 'vuex'
-import {ref} from "vue";
+import { ref } from "vue";
 
 defineOptions({
     name: 'login',
@@ -49,10 +49,10 @@ async function login() {
     processing.value = true
     console.log(auth.value)
     await axios.get('/sanctum/csrf-cookie')
-    await axios.post('/login', auth.value).then(({data}) => {
+    await axios.post('/login', auth.value).then(({ data }) => {
         // this.signIn()
         console.log(auth.value)
-    }).catch(({response}) => {
+    }).catch(({ response }) => {
         if (response.status === 422) {
             validationErrors.value = response.data.errors
         } else {
