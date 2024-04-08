@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::get('api/v0/first', function () {
     return response()->json(Link::first());
 });
@@ -23,9 +24,11 @@ Route::get('api/v0/last', function () {
 Route::get('api/v0/index', function () {
     return response()->json(Link::where('points', '>', 10)->orderBy('points', 'desc')->get());
 })->name('index')->middleware('auth');
+
 Route::get('/', function () {
-    return view('welcome');
-})->name('main');
-Route::get('/app', function () {
     return view('app');
-})->middleware('auth');
+})->name('main');
+
+Route::fallback(function () {
+    return view('app');
+});
