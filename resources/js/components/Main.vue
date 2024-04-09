@@ -13,7 +13,7 @@
             <p slot="register">reg</p>
 
         </router-view>
-      
+
 
         <DataTable :data="tableData" :columns="tableColumns" :options="options" class="table table-hover table-striped"
                    width="100%">
@@ -35,10 +35,13 @@
 import axios from 'axios';
 import {onMounted, ref, computed} from 'vue';
 import {DataTable} from "datatables.net-vue3";
+import {RouterView, useRouter} from "vue-router";
 
 import DataTablesCore from 'datatables.net-bs5';
 
 DataTable.use(DataTablesCore);
+
+const router = useRouter();
 
 const props = defineProps({
     fetchUrl: {type: String, required: true},
@@ -74,6 +77,10 @@ async function fetchData(url) {
     if (response.status === 200) {
 
         tableData.value = response.data;
+    }
+    if (response.status === 401) {
+        console.log('401')
+        await router.push({name: 'login'})
     }
 }
 
