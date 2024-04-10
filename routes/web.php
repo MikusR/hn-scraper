@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Link;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +25,10 @@ Route::get('api/v0/last', function () {
 Route::get('api/v0/index', function () {
     return response()->json(Link::where('points', '>', 10)->orderBy('points', 'desc')->get());
 })->name('index')->middleware('auth');
+
+Route::get('/api/v0/user', function () {
+    return Auth::user();
+})->middleware('auth')->name('check');
 
 Route::get('/', function () {
     return view('welcome');

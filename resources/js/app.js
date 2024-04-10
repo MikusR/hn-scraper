@@ -34,10 +34,14 @@ const router = createRouter({
         }
     ]
 })
+
 const store = createStore({
     state() {
         return {
-            isLoggedIn: false
+            isLoggedIn: false,
+            hasErrors: false,
+            errors: [],
+            checkUrl: document.getElementById('app').getAttribute('data-check-url'),
         }
     },
     mutations: {
@@ -46,10 +50,24 @@ const store = createStore({
         },
         LogOut(state) {
             state.isLoggedIn = false
+        },
+        ClearErrors(state) {
+            state.hasErrors = false
+            state.errors = []
+        },
+        AddError(state, error) {
+            state.hasErrors = true
+            state.errors.push(error)
+        },
+        SetErrors(state, errors) {
+            state.hasErrors = true
+            state.errors = errors
+        },
+        SetCheckUrl(state, url) {
+            state.checkUrl = url
         }
     }
 })
-
 const app = createApp(App)
 app.use(store)
 app.use(router);

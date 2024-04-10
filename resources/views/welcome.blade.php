@@ -9,7 +9,7 @@
 
 </head>
 <body class="min-h-screen grid">
-<div id="app" data-url="{{ route('index') }}">
+<div id="app" data-url="{{ route('index') }}" data-check-url="{{ route('check') }}">
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
 </body>

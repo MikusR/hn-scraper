@@ -1,22 +1,29 @@
 <template>
     <div class="container">
         <div class="row justify-content-end bg-primary">
-            <h1 class="col-4 d-flex justify-content-center bg-primary">HN stories</h1>
-            <a @click="logout" href="#"
+            <h1 class="col-4 d-flex justify-content-center bg-primary">
+                <router-link class="text-decoration-none text-white" :to="{ path: '/articles'}">
+                    HN stories
+                </router-link>
+            </h1>
+            <a v-if="store.state.isLoggedIn" @click="logout" href="#"
                class="col-4 d-flex justify-content-end text-secondary-emphasis">Log out</a>
+            <router-link v-if="!store.state.isLoggedIn" class="col-4 d-flex justify-content-end text-secondary-emphasis"
+                         :to="{ path: '/login'}">login
+            </router-link>
         </div>
-        <router-link class="link" :to="{ path: '/login'}">login</router-link>
-        <router-link class="link" :to="{ path: '/articles'}">articles</router-link>
-        <router-link class="link" :to="{ path: '/register'}">register</router-link>
-        <!--        <div>fsdfs {{ $validationErrors.value }}</div>-->
-        <!--        <div v-if="$validationErrors.length > 0">-->
-        <!--            <div class="alert alert-danger">-->
-        <!--                <ul>-->
-        <!--                    <li v-for="(value, key) in $validationErrors" :key="key">{{ value[0] }}</li>-->
-        <!--                </ul>-->
-        <!--            </div>-->
-        <!--        </div>-->
-        <router-view/>
+
+
+        <div v-if="store.state.hasErrors">
+            <div class="alert alert-danger">
+                <ul>
+                    <li v-for="(value, key) in store.state.errors" :key="key">{{ value[0] }}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="justify-content-center">
+            <router-view/>
+        </div>
 
 
     </div>
@@ -29,19 +36,31 @@
 import {RouterView, useRouter} from "vue-router";
 import {useStore} from 'vuex'
 import axios from 'axios';
+import {onBeforeMount} from "vue";
 
 const store = useStore()
 const router = useRouter();
-console.log(store.state.authorized)
 
+
+onBeforeMount(() => {
+    checkLogin(store.state.checkUrl);
+})
+
+async function checkLogin(url) {
+    try {
+        await axios.get(url)
+        store.commit('LogIn')
+    } catch (error) {
+        store.commit('LogOut')
+    }
+}
 
 async function logout() {
-
     axios.post('/logout')
         .then(() => {
-            console.log("logging out", store.state.isLoggedIn)
             store.commit('LogOut')
-            return location.href = '/';
+            router.push({name: 'login'});
         })
+
 }
 </script>
