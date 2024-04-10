@@ -16,7 +16,7 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            redirect: '/login'
+            redirect: '/articles'
         },
         {
             path: '/login',
@@ -48,7 +48,7 @@ const store = createStore({
         }
     },
     mutations: {
-       
+
         SetUserName(state, name) {
             state.user.name = name
         },
@@ -74,6 +74,7 @@ const store = createStore({
     },
     getters: {
         isLoggedIn(state) {
+
             return state.user.name !== null;
         }
     },

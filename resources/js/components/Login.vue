@@ -40,6 +40,7 @@ import {useStore} from 'vuex'
 
 const store = useStore()
 const router = useRouter()
+
 defineOptions({
     name: 'login',
 })
@@ -48,8 +49,8 @@ const auth = ref({
     password: ""
 })
 
-const processing = ref(false)
 
+const processing = ref(false)
 
 async function login() {
     processing.value = true
