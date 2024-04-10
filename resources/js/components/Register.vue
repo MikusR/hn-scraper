@@ -43,13 +43,13 @@
 </template>
 <script setup>
 import axios from "axios";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 
 const store = useStore()
 const router = useRouter()
-console.log("register.vue", store.getters.isLoggedIn)
+
 defineOptions({
     name: 'register',
 })
@@ -74,10 +74,8 @@ async function register() {
             router.push({name: 'articles'})
         })
         .catch(({response}) => {
-            console.log("response", response.data)
             if (response.status === 422) {
                 store.commit('SetErrors', response.data.errors)
-                console.log("state ", store.state.errors)
             }
             if (response.status === 429) {
                 store.commit('SetMessage', "too many connections. please try again later")

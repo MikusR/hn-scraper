@@ -45,10 +45,10 @@ const store = useStore()
 const router = useRouter();
 
 
-onMounted(async () => {
-    await store.dispatch('checkLogin')
+onMounted(() => {
+    store.dispatch('checkLogin')
 })
-console.log("app.vue", store.getters.isLoggedIn)
+
 
 async function logout() {
     axios.post('/logout')

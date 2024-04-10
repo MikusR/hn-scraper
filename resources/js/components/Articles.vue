@@ -24,7 +24,7 @@ import DataTablesCore from 'datatables.net-bs5';
 
 import axios from 'axios';
 
-import {onBeforeMount, onMounted, ref} from 'vue';
+import {onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router';
 import {useStore} from "vuex";
 
@@ -77,12 +77,14 @@ async function fetchData(url) {
 
 onMounted(() => {
 
+    store.dispatch('checkLogin')
+
     if (store.getters.isLoggedIn) {
         fetchData(props.fetchUrl);
     } else router.push({name: 'login'})
 
 });
-console.log("articles.vue", store.getters.isLoggedIn)
+
 
 </script>
 <style>
