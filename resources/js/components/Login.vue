@@ -66,9 +66,9 @@ async function login() {
                 store.commit('SetErrors', response.data.errors)
             }
             if (response.status === 429) {
-                store.commit('SetErrors', {message: ["too many connections. please try again later"]})
+                store.commit('SetMessage', "too many connections. please try again later")
             } else {
-                store.commit('SetErrors', {message: [response.data.message]})
+                store.commit('SetMessage', response.data.message)
             }
         })
         .finally(() => {

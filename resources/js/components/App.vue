@@ -16,6 +16,7 @@
 
         <div v-if="store.state.hasErrors">
             <div class="alert alert-danger">
+                <h5>{{ store.state.message }}</h5>
                 <ul>
                     <li v-for="(value, key) in store.state.errors" :key="key">{{ value[0] }}</li>
                 </ul>

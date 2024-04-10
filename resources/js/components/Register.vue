@@ -77,11 +77,12 @@ async function register() {
             console.log("response", response.data)
             if (response.status === 422) {
                 store.commit('SetErrors', response.data.errors)
+                console.log("state ", store.state.errors)
             }
             if (response.status === 429) {
-                store.commit('SetErrors', {message: ["too many connections. please try again later"]})
+                store.commit('SetMessage', "too many connections. please try again later")
             } else {
-                store.commit('SetErrors', {message: [response.data.message]})
+                store.commit('SetMessage', response.data.message)
             }
         })
         .finally(() => {
