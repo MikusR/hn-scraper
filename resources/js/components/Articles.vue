@@ -20,21 +20,21 @@
 <script setup>
 
 import {DataTable} from "datatables.net-vue3";
-
-import axios from 'axios';
-import {onMounted, ref} from 'vue';
-
 import DataTablesCore from 'datatables.net-bs5';
 
-DataTable.use(DataTablesCore);
+import axios from 'axios';
+
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
 
 const props = defineProps({
     fetchUrl: {type: String, required: true},
-    columns: {type: Array, required: true},
 })
+DataTable.use(DataTablesCore);
 
+const columns = ['points', 'title', 'article_id']
 const tableData = ref([]);
-
+const router = useRouter();
 const options = ref({
     order: [0, 'desc'],
     select: true
@@ -58,15 +58,19 @@ const tableColumns = ref([
 
 
 async function fetchData(url) {
-    const response = await axios.get(url)
-    if (response.status === 200) {
-
+    try {
+        const response = await axios.get(url)
         tableData.value = response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            await router.push({name: 'login'})
+            console.error('401');
+
+        } else {
+            console.error('Error:', error.message);
+        }
     }
-    if (response.status === 401) {
-        console.log('401')
-        await router.push({name: 'login'})
-    }
+
 }
 
 onMounted(() => {

@@ -7,7 +7,7 @@ import Articles from './components/Articles'
 import Login from './components/Login'
 import Register from './components/Register'
 
-
+const url = document.getElementById('app').getAttribute('data-url')
 const router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -23,7 +23,8 @@ const router = createRouter({
         {
             path: '/articles',
             name: 'articles',
-            component: Articles
+            component: Articles,
+            props: {fetchUrl: url}
         },
         {
             path: '/register',
@@ -32,6 +33,7 @@ const router = createRouter({
         }
     ]
 })
+
 const app = createApp(App)
 app.use(router);
 app.component('articles', Articles)

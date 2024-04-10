@@ -69,7 +69,7 @@ async function login() {
         }
     }).finally(() => {
         processing.value = false
-        router.push({name: 'main'})
+        router.push({name: 'articles'})
 
     })
 }
