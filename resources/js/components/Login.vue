@@ -57,7 +57,7 @@ async function login() {
     await axios.get('/sanctum/csrf-cookie')
     await axios.post('/login', auth.value)
         .then(() => {
-            store.commit('LogIn')
+            store.dispatch('checkLogin')
             store.commit('ClearErrors')
             router.push({name: 'articles'})
         })

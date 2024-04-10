@@ -1,3 +1,5 @@
+import axios from "axios";
+
 require('./bootstrap');
 import 'bootstrap';
 import {createApp, ref} from 'vue'
@@ -38,19 +40,20 @@ const router = createRouter({
 const store = createStore({
     state() {
         return {
-            isLoggedIn: false,
             hasErrors: false,
             errors: {},
             message: "",
             checkUrl: document.getElementById('app').getAttribute('data-check-url'),
+            user: {name: null}
         }
     },
     mutations: {
-        LogIn(state) {
-            state.isLoggedIn = true
+       
+        SetUserName(state, name) {
+            state.user.name = name
         },
         LogOut(state) {
-            state.isLoggedIn = false
+            state.user.name = null
         },
         ClearErrors(state) {
             state.hasErrors = false
@@ -68,7 +71,25 @@ const store = createStore({
         SetCheckUrl(state, url) {
             state.checkUrl = url
         }
+    },
+    getters: {
+        isLoggedIn(state) {
+            return state.user.name !== null;
+        }
+    },
+    actions: {
+        async checkLogin(context) {
+            try {
+                await axios.get(context.state.checkUrl).then(({data}) => {
+                    context.commit('SetUserName', data.name)
+                })
+
+            } catch (error) {
+                context.commit('LogOut')
+            }
+        }
     }
+
 })
 const app = createApp(App)
 app.use(store)
