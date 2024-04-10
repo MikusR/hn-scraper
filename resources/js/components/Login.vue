@@ -7,7 +7,7 @@
 
                 <div class="mb-3 from-orange-300">
                     <label class="form-label" for="email">Email</label>
-                    <input class="form-control" type="text" v-model="auth.email" name="email" id="email" size="20">
+                    <input class="form-control" type="text" v-model="auth.email" name="email" id="email" size="50">
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="password">Password</label>
@@ -21,12 +21,12 @@
 
 
             </form>
-            <!--            <div class="mb-3">-->
-            <!--                <label>Don't have an account?-->
-            <!--                    <router-link :to="{ name: 'register' }">register!</router-link>-->
+            <div class="mb-3">
+                <label>Don't have an account?
+                    <router-link :to="{ name: 'register' }">register!</router-link>
 
-            <!--                </label>-->
-            <!--            </div>-->
+                </label>
+            </div>
 
         </div>
     </div>
@@ -64,8 +64,11 @@ async function login() {
         .catch(({response}) => {
             if (response.status === 422) {
                 store.commit('SetErrors', response.data.errors)
+            }
+            if (response.status === 429) {
+                store.commit('SetMessage', "too many connections. please try again later")
             } else {
-                store.commit('SetErrors', [response.data.message])
+                store.commit('SetMessage', response.data.message)
             }
         })
         .finally(() => {

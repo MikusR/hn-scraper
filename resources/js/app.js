@@ -40,7 +40,8 @@ const store = createStore({
         return {
             isLoggedIn: false,
             hasErrors: false,
-            errors: [],
+            errors: {},
+            message: "",
             checkUrl: document.getElementById('app').getAttribute('data-check-url'),
         }
     },
@@ -53,15 +54,16 @@ const store = createStore({
         },
         ClearErrors(state) {
             state.hasErrors = false
-            state.errors = []
-        },
-        AddError(state, error) {
-            state.hasErrors = true
-            state.errors.push(error)
+            state.message = ""
+            state.errors = {}
         },
         SetErrors(state, errors) {
             state.hasErrors = true
             state.errors = errors
+        },
+        SetMessage(state, message) {
+            state.hasErrors = true
+            state.message = message
         },
         SetCheckUrl(state, url) {
             state.checkUrl = url
