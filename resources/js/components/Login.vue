@@ -1,5 +1,5 @@
 <template>
-    <slot name="test-login"></slot>
+
     <div class="container">
 
         <form action="javascript:void(0)" class="row" @submit.prevent="login">
@@ -25,7 +25,7 @@
             </div>
             <div>
                 <label>Don't have an account?
-                    <router-link :to="{ name: 'main' }">main!</router-link>
+                    <!--                    <router-link :to="{ name: 'main' }">main!</router-link>-->
                     <router-link :to="{ name: 'register' }">register!</router-link>
 
                 </label>
@@ -37,7 +37,7 @@
 <script setup>
 // import {mapActions} from 'vuex'
 import {ref} from "vue";
-import Main from './Main'
+// import Main from './Main'
 import Register from "./Register.vue";
 import {useRouter} from 'vue-router'
 

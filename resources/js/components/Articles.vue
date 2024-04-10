@@ -1,19 +1,5 @@
 <template>
     <div class="container">
-        <div class="row justify-content-end bg-primary">
-            <h1 class="col-4 d-flex justify-content-center bg-primary">HN stories</h1>
-            <a @click="logout" href="javascript:void(0)"
-               class="col-4 d-flex justify-content-end text-secondary-emphasis">Log
-                out</a>
-        </div>
-        <router-link class="link" :to="{ path: '/login'}">login</router-link>
-        <router-link class="link" :to="{ path: '/register'}">register</router-link>
-        <router-view>
-            <p slot="test-login">log</p>
-            <p slot="register">reg</p>
-
-        </router-view>
-
 
         <DataTable :data="tableData" :columns="tableColumns" :options="options" class="table table-hover table-striped"
                    width="100%">
@@ -32,16 +18,15 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import {onMounted, ref, computed} from 'vue';
+
 import {DataTable} from "datatables.net-vue3";
-import {RouterView, useRouter} from "vue-router";
+
+import axios from 'axios';
+import {onMounted, ref} from 'vue';
 
 import DataTablesCore from 'datatables.net-bs5';
 
 DataTable.use(DataTablesCore);
-
-const router = useRouter();
 
 const props = defineProps({
     fetchUrl: {type: String, required: true},
@@ -88,10 +73,6 @@ onMounted(() => {
     fetchData(props.fetchUrl);
 });
 
-async function logout() {
-    axios.post('/logout')
-        .then(() => location.href = '/')
-}
 
 </script>
 <style>

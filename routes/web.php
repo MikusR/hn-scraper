@@ -26,9 +26,10 @@ Route::get('api/v0/index', function () {
 })->name('index')->middleware('auth');
 
 Route::get('/', function () {
-    return view('app');
+    return view('welcome');
 })->name('main');
 
 Route::fallback(function () {
-    return view('app');
+    return view('welcome');
 });
+

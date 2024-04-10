@@ -9,10 +9,9 @@
 
 </head>
 <body class="min-h-screen grid">
-<div id="app" >
-   
-        <login/>
-    
+<div id="app">
+
+
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
 </body>
