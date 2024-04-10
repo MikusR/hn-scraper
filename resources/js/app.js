@@ -27,7 +27,8 @@ const router = createRouter({
             path: '/articles',
             name: 'articles',
             component: Articles,
-            props: {fetchUrl: url}
+            props: {fetchUrl: url},
+            // meta: {requiresAuth: true}
         },
         {
             path: '/register',
@@ -36,6 +37,7 @@ const router = createRouter({
         }
     ]
 })
+
 
 const store = createStore({
     state() {
@@ -80,9 +82,12 @@ const store = createStore({
     },
     actions: {
         async checkLogin(context) {
+            console.log("before check", context.getters.isLoggedIn)
             try {
+                console.log("before await", context.getters.isLoggedIn)
                 await axios.get(context.state.checkUrl).then(({data}) => {
                     context.commit('SetUserName', data.name)
+                    console.log("await check", context.getters.isLoggedIn, data.name)
                 })
 
             } catch (error) {
@@ -92,10 +97,30 @@ const store = createStore({
     }
 
 })
+// router.beforeEach((to, from, next) => {
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//         if (!store.getters.isLoggedIn) {
+//             next({
+//                 path: '/login',
+//                 query: {redirect: to.path}
+//             })
+//         } else {
+//             next()
+//         }
+//     } else {
+//         next()
+//     }
+// })
+console.log("app.js before create", store.getters.isLoggedIn)
 const app = createApp(App)
+console.log("app.js after create", store.getters.isLoggedIn)
 app.use(store)
+console.log("app.js after use store", store.getters.isLoggedIn)
 app.use(router);
 app.component('articles', Articles)
 app.component('login', Login)
 app.component('register', Register)
 app.mount('#app')
+console.log("app.js after mount", store.getters.isLoggedIn)
+store.dispatch('checkLogin')
+console.log("app.js after mount and checkLogin", store.getters.isLoggedIn)

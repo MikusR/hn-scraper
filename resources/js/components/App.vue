@@ -39,10 +39,16 @@
 import {RouterView, useRouter} from "vue-router";
 import {useStore} from 'vuex'
 import axios from 'axios';
+import {onMounted} from "vue";
 
 const store = useStore()
 const router = useRouter();
 
+
+onMounted(async () => {
+    await store.dispatch('checkLogin')
+})
+console.log("app.vue", store.getters.isLoggedIn)
 
 async function logout() {
     axios.post('/logout')

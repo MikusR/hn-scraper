@@ -49,6 +49,7 @@ import {useStore} from 'vuex'
 
 const store = useStore()
 const router = useRouter()
+console.log("register.vue", store.getters.isLoggedIn)
 defineOptions({
     name: 'register',
 })

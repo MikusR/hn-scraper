@@ -74,9 +74,7 @@ async function fetchData(url) {
 
 }
 
-onBeforeMount(() => {
-    store.dispatch('checkLogin')
-})
+
 onMounted(() => {
 
     if (store.getters.isLoggedIn) {
@@ -84,7 +82,7 @@ onMounted(() => {
     } else router.push({name: 'login'})
 
 });
-
+console.log("articles.vue", store.getters.isLoggedIn)
 
 </script>
 <style>

@@ -48,7 +48,7 @@ const auth = ref({
     email: "",
     password: ""
 })
-
+console.log("login.vue", store.getters.isLoggedIn)
 
 const processing = ref(false)
 
