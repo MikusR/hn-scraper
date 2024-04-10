@@ -27,6 +27,12 @@ use Composer to get dependencies
 $ composer install
 ```
 
+generate Laravel app key
+
+```bash
+php artisan key:generate
+```
+
 use npm to get dependencies for Vue
 
 ```bash
