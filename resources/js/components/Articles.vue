@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <h1 class="text-center bg-primary">HN stories</h1>
 
         <DataTable :data="tableData" :columns="tableColumns" :options="options" class="table table-hover table-striped"
                    width="100%">
@@ -12,15 +11,6 @@
                 </th>
             </tr>
             </thead>
-            <!--        <tbody>-->
-            <!--        <tr class="" v-if="tableData.length === 0">-->
-            <!--            <td class="" :colspan="columns.length + 1">No data found.</td>-->
-            <!--        </tr>-->
-            <!--        <tr v-for="(data, key1) in tableData" :key="data.id" class="" v-else>-->
-            <!--            <td v-for="(value, key) in data">{{ value }}</td>-->
-            <!--        </tr>-->
-            <!--        </tbody>-->
-
         </DataTable>
     </div>
 
@@ -28,23 +18,25 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import {onMounted, ref, computed} from 'vue';
-import {DataTable} from "datatables.net-vue3";
 
+import {DataTable} from "datatables.net-vue3";
 import DataTablesCore from 'datatables.net-bs5';
 
-DataTable.use(DataTablesCore);
-// const data = ref([['a', '1', '1f'], ['b', '2', '1a']])
-// DataTable.data = data;
+import axios from 'axios';
 
+import {onMounted, ref} from 'vue';
+import {useRouter} from 'vue-router';
+import {useStore} from "vuex";
+
+const store = useStore()
 const props = defineProps({
     fetchUrl: {type: String, required: true},
-    columns: {type: Array, required: true},
 })
-// console.log(props['fetchUrl']);
-const tableData = ref([]);
+DataTable.use(DataTablesCore);
 
+const columns = ['points', 'title', 'article_id']
+const tableData = ref([]);
+const router = useRouter();
 const options = ref({
     order: [0, 'desc'],
     select: true
@@ -68,22 +60,25 @@ const tableColumns = ref([
 
 
 async function fetchData(url) {
-    const response = await axios.get(url)
-    if (response.status === 200) {
-
+    try {
+        const response = await axios.get(url)
         tableData.value = response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            await router.push({name: 'login'})
+
+        } else {
+            console.error('Error:', error.message);
+        }
     }
+
 }
 
-// function serialNumber(key) {
-//     return key + 1;
-// }
-
-// const columnHead = computed((value) => {
-//     return value.toUpperCase()
-// })
 onMounted(() => {
-    fetchData(props.fetchUrl);
+    if (store.state.isLoggedIn) {
+        fetchData(props.fetchUrl);
+    } else router.push({name: 'login'})
+
 });
 
 

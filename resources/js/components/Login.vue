@@ -1,0 +1,79 @@
+<template>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="row">
+
+
+            <form action="javascript:void(0)" @submit.prevent="login">
+
+                <div class="mb-3 from-orange-300">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="text" v-model="auth.email" name="email" id="email" size="20">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" v-model="auth.password" name="password"
+                           id="password">
+                </div>
+
+                <button type="submit" :disabled="processing" class="btn btn-primary ">
+                    {{ processing ? "Please wait" : "Login" }}
+                </button>
+
+
+            </form>
+            <!--            <div class="mb-3">-->
+            <!--                <label>Don't have an account?-->
+            <!--                    <router-link :to="{ name: 'register' }">register!</router-link>-->
+
+            <!--                </label>-->
+            <!--            </div>-->
+
+        </div>
+    </div>
+
+</template>
+<script setup>
+import axios from "axios";
+import {ref} from "vue";
+import {useRouter} from 'vue-router'
+import {useStore} from 'vuex'
+
+const store = useStore()
+const router = useRouter()
+defineOptions({
+    name: 'login',
+})
+const auth = ref({
+    email: "",
+    password: ""
+})
+
+const processing = ref(false)
+
+
+async function login() {
+    processing.value = true
+
+    await axios.get('/sanctum/csrf-cookie')
+    await axios.post('/login', auth.value)
+        .then(() => {
+            store.commit('LogIn')
+            store.commit('ClearErrors')
+            router.push({name: 'articles'})
+        })
+        .catch(({response}) => {
+            if (response.status === 422) {
+                store.commit('SetErrors', response.data.errors)
+            } else {
+                store.commit('SetErrors', [response.data.message])
+            }
+        })
+        .finally(() => {
+            processing.value = false
+
+        })
+
+
+}
+
+</script>
