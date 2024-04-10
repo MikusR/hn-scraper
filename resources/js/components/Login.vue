@@ -1,28 +1,33 @@
 <template>
-
-    <div class="login-form">
-        <form action="javascript:void(0)" @submit.prevent="login">
-
-            <div class="mb-3 from-orange-300">
-                <label class="form-label" for="email">Email</label>
-                <input class="form-control" type="text" v-model="auth.email" name="email" id="email">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="password">Password</label>
-                <input class="form-control" type="password" v-model="auth.password" name="password" id="password">
-            </div>
-
-            <button type="submit" :disabled="processing" class="btn btn-primary ">
-                {{ processing ? "Please wait" : "Login" }}
-            </button>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="row">
 
 
-        </form>
-        <div class="mb-3">
-            <label>Don't have an account?
-                <router-link :to="{ name: 'register' }">register!</router-link>
+            <form action="javascript:void(0)" @submit.prevent="login">
 
-            </label>
+                <div class="mb-3 from-orange-300">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-control" type="text" v-model="auth.email" name="email" id="email" size="20">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" v-model="auth.password" name="password"
+                           id="password">
+                </div>
+
+                <button type="submit" :disabled="processing" class="btn btn-primary ">
+                    {{ processing ? "Please wait" : "Login" }}
+                </button>
+
+
+            </form>
+            <!--            <div class="mb-3">-->
+            <!--                <label>Don't have an account?-->
+            <!--                    <router-link :to="{ name: 'register' }">register!</router-link>-->
+
+            <!--                </label>-->
+            <!--            </div>-->
+
         </div>
     </div>
 
@@ -50,20 +55,25 @@ async function login() {
     processing.value = true
 
     await axios.get('/sanctum/csrf-cookie')
-    await axios.post('/login', auth.value).then(({data}) => {
-    }).catch(({response}) => {
-        if (response.status === 422) {
-            store.commit('SetErrors', response.data.errors)
-        } else {
-            store.commit('SetErrors', response.data.message)
-        }
-    }).finally(() => {
-        processing.value = false
+    await axios.post('/login', auth.value)
+        .then(() => {
+            store.commit('LogIn')
+            store.commit('ClearErrors')
+            router.push({name: 'articles'})
+        })
+        .catch(({response}) => {
+            if (response.status === 422) {
+                store.commit('SetErrors', response.data.errors)
+            } else {
+                store.commit('SetErrors', [response.data.message])
+            }
+        })
+        .finally(() => {
+            processing.value = false
 
-    })
-    store.commit('LogIn')
-    store.commit('ClearErrors')
-    await router.push({name: 'articles'})
+        })
+
+
 }
 
 </script>

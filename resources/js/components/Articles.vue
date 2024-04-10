@@ -26,7 +26,9 @@ import axios from 'axios';
 
 import {onMounted, ref} from 'vue';
 import {useRouter} from 'vue-router';
+import {useStore} from "vuex";
 
+const store = useStore()
 const props = defineProps({
     fetchUrl: {type: String, required: true},
 })
@@ -64,7 +66,6 @@ async function fetchData(url) {
     } catch (error) {
         if (error.response && error.response.status === 401) {
             await router.push({name: 'login'})
-            console.error('401');
 
         } else {
             console.error('Error:', error.message);
@@ -74,7 +75,10 @@ async function fetchData(url) {
 }
 
 onMounted(() => {
-    fetchData(props.fetchUrl);
+    if (store.state.isLoggedIn) {
+        fetchData(props.fetchUrl);
+    } else router.push({name: 'login'})
+
 });
 
 
