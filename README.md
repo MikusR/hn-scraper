@@ -80,7 +80,7 @@ crontab -e
 ```
 
 ```cronexp
-* * * * * cd /{your path} && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd {your path} && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## Commands
