@@ -19,13 +19,13 @@
                     {{ processing ? "Please wait" : "Login" }}
                 </button>
 
-
             </form>
             <div class="mb-3">
                 <label>Don't have an account?
                     <router-link :to="{ name: 'register' }">register!</router-link>
-
                 </label>
+                or use
+                <button class="btn btn-danger btn-sm" @click="demoLogin">Demo login</button>
             </div>
 
         </div>
@@ -52,6 +52,15 @@ onMounted(() => {
     store.commit('ClearErrors');
 })
 const processing = ref(false)
+
+function demoLogin() {
+    auth.value = {
+        email: "test@test.test",
+        password: "test"
+    }
+
+    login()
+}
 
 async function login() {
     processing.value = true
