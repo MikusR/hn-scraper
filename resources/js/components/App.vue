@@ -6,9 +6,11 @@
                     HN stories
                 </router-link>
             </h1>
-            <a v-if="store.state.isLoggedIn" @click="logout" href="#"
-               class="col-4 d-flex justify-content-end text-secondary-emphasis">Log out</a>
-            <router-link v-if="!store.state.isLoggedIn" class="col-4 d-flex justify-content-end text-secondary-emphasis"
+            <a v-if="store.getters.isLoggedIn" @click="logout" href="#"
+               class="col-4 d-flex justify-content-end text-secondary-emphasis">
+                Log out ({{ store.state.user.name }})</a>
+            <router-link v-if="!store.getters.isLoggedIn"
+                         class="col-4 d-flex justify-content-end text-secondary-emphasis"
                          :to="{ path: '/login'}">login
             </router-link>
         </div>
@@ -37,23 +39,17 @@
 import {RouterView, useRouter} from "vue-router";
 import {useStore} from 'vuex'
 import axios from 'axios';
-import {onBeforeMount} from "vue";
+import {onMounted} from "vue";
 
 const store = useStore()
 const router = useRouter();
 
 
-onBeforeMount(() => {
-    checkLogin(store.state.checkUrl);
+onMounted(() => {
+    store.dispatch('checkLogin')
 })
-
-async function checkLogin(url) {
-    try {
-        await axios.get(url)
-        store.commit('LogIn')
-    } catch (error) {
-        store.commit('LogOut')
-    }
+if (store.getters.isLoggedIn) {
+    router.push({name: 'articles'})
 }
 
 async function logout() {

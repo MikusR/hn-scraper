@@ -1,3 +1,5 @@
+import axios from "axios";
+
 require('./bootstrap');
 import 'bootstrap';
 import {createApp, ref} from 'vue'
@@ -14,7 +16,7 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            redirect: '/login'
+            redirect: '/articles'
         },
         {
             path: '/login',
@@ -25,7 +27,7 @@ const router = createRouter({
             path: '/articles',
             name: 'articles',
             component: Articles,
-            props: {fetchUrl: url}
+            props: {fetchUrl: url},
         },
         {
             path: '/register',
@@ -33,24 +35,29 @@ const router = createRouter({
             component: Register
         }
     ]
+
 })
+
 
 const store = createStore({
     state() {
         return {
-            isLoggedIn: false,
             hasErrors: false,
             errors: {},
             message: "",
             checkUrl: document.getElementById('app').getAttribute('data-check-url'),
+            user: {name: localStorage.getItem('name')}
         }
     },
     mutations: {
-        LogIn(state) {
-            state.isLoggedIn = true
+
+        SetUserName(state, name) {
+            state.user.name = name
+            localStorage.setItem('name', name)
         },
         LogOut(state) {
-            state.isLoggedIn = false
+            state.user.name = null
+            localStorage.removeItem('name')
         },
         ClearErrors(state) {
             state.hasErrors = false
@@ -68,8 +75,27 @@ const store = createStore({
         SetCheckUrl(state, url) {
             state.checkUrl = url
         }
+    },
+    getters: {
+        isLoggedIn(state) {
+            return state.user.name !== null;
+        }
+    },
+    actions: {
+        async checkLogin(context) {
+            try {
+                await axios.get(context.state.checkUrl).then(({data}) => {
+                    context.commit('SetUserName', data.name)
+                })
+            } catch (error) {
+                context.commit('LogOut')
+            }
+        }
     }
+
 })
+
+
 const app = createApp(App)
 app.use(store)
 app.use(router);

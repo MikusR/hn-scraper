@@ -43,12 +43,13 @@
 </template>
 <script setup>
 import axios from "axios";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 
 const store = useStore()
 const router = useRouter()
+
 defineOptions({
     name: 'register',
 })
@@ -68,16 +69,13 @@ async function register() {
     await axios.get('/sanctum/csrf-cookie')
     await axios.post('/register', auth.value)
         .then(({data}) => {
-            console.log("data", data)
-            store.commit('LogIn')
+            store.dispatch('checkLogin')
             store.commit('ClearErrors')
             router.push({name: 'articles'})
         })
         .catch(({response}) => {
-            console.log("response", response.data)
             if (response.status === 422) {
                 store.commit('SetErrors', response.data.errors)
-                console.log("state ", store.state.errors)
             }
             if (response.status === 429) {
                 store.commit('SetMessage', "too many connections. please try again later")

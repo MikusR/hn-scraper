@@ -34,12 +34,13 @@
 </template>
 <script setup>
 import axios from "axios";
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRouter} from 'vue-router'
 import {useStore} from 'vuex'
 
 const store = useStore()
 const router = useRouter()
+
 defineOptions({
     name: 'login',
 })
@@ -50,15 +51,14 @@ const auth = ref({
 
 const processing = ref(false)
 
-
 async function login() {
     processing.value = true
 
     await axios.get('/sanctum/csrf-cookie')
     await axios.post('/login', auth.value)
         .then(() => {
-            store.commit('LogIn')
             store.commit('ClearErrors')
+            store.dispatch('checkLogin')
             router.push({name: 'articles'})
         })
         .catch(({response}) => {
@@ -73,7 +73,6 @@ async function login() {
         })
         .finally(() => {
             processing.value = false
-
         })
 
 
