@@ -12,12 +12,8 @@
                 </th>
             </tr>
             </thead>
-            <button class="btn btn-danger" @click="deleteSelectedRows">Delete Selected Rows</button>
-            <div>
-            <pre>
-                {{ selectedRows }}
-            </pre>
-            </div>
+            <button class="btn btn-danger btn-sm" @click="deleteSelectedRows">Delete Selected Rows</button>
+
         </DataTable>
 
     </div>
@@ -29,6 +25,7 @@
 
 import {DataTable} from "datatables.net-vue3";
 import DataTablesCore from 'datatables.net-bs5';
+import 'datatables.net-select-bs5';
 
 import axios from 'axios';
 
@@ -46,18 +43,12 @@ DataTable.use(DataTablesCore);
 
 const columns = ['points', 'title', 'article_id']
 const tableData = ref([]);
-const selectedRows = ref([]);
 const options = ref({
-    order: [1, 'desc'],
+    order: [0, 'desc'],
     select: true
 });
 const tableColumns = ref([
-        {
-            data: 'article_id',
-            render: function (data, type, row, meta) {
-                return '<input type="checkbox" name="arow" v-model="selectedRows" :value="' + data + '">';
-            }, width: '1%'
-        },
+
         {data: 'points', width: '10%'},
         {
             data: null,
@@ -94,22 +85,12 @@ async function fetchData(url) {
 
 async function deleteSelectedRows() {
     try {
-        // const test = dt.rows({selected: true}).data();
         dt.rows({selected: true}).every(function () {
-            console.log(this.data().article_id)
+            let idx = tableData.value.indexOf(this.data());
+            tableData.value.splice(idx, 1);
+            axios.delete('/api/v0/delete-link/' + this.data().article_id)
+        })
 
-        });
-        // test.forEach(item => {
-        //     selectedRows.value.push(item.article_id);
-        // })
-        // console.log(selectedRows);
-        // console.log(selectedRows);
-        // const response = await axios.post('/api/delete-rows', { rows: this.selectedRows });
-        // console.log(response.data);
-        // Remove deleted rows from the local data
-        // tableData.value = tableData.value.filter(item => !this.selectedRows.includes(item.id));
-        // Clear selectedRows array
-        // selectedRows.value = [];
     } catch (error) {
         console.error('Error:', error.message);
     }
@@ -125,4 +106,5 @@ onMounted(() => {
 <style>
 
 @import 'datatables.net-bs5';
+@import 'datatables.net-select-bs5';
 </style>
