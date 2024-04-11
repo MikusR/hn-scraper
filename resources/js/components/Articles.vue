@@ -41,7 +41,7 @@ const props = defineProps({
 })
 DataTable.use(DataTablesCore);
 
-const columns = ['points', 'title', 'created']
+const columns = ['points', 'title', 'posted']
 const tableData = ref([]);
 const options = ref({
     order: [0, 'desc'],
