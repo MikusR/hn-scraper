@@ -48,7 +48,9 @@ const auth = ref({
     email: "",
     password: ""
 })
-
+onMounted(() => {
+    store.commit('ClearErrors');
+})
 const processing = ref(false)
 
 async function login() {

@@ -100,6 +100,7 @@ async function deleteSelectedRows() {
 }
 
 onMounted(() => {
+    store.commit('ClearErrors');
     fetchData(props.fetchUrl);
     dt = hntable.value.dt;
 });
