@@ -51,7 +51,7 @@ class GetHNFromApi extends Command
                 $url = 'https://hacker-news.firebaseio.com/v0/beststories.json';
                 break;
         }
-        
+
         $json = file_get_contents($url);
         $data = json_decode($json, true);
 
@@ -61,7 +61,7 @@ class GetHNFromApi extends Command
 
                 if ($link->trashed() === false) {
                     $scoreBefore = $link->points;
-                    $this->updateScore($link);
+                    $this->updateLink($link);
                     $test = $link->points - $scoreBefore;
                     if ($test > 0) {
                         echo $link->title . "\n";
@@ -79,11 +79,17 @@ class GetHNFromApi extends Command
         return 0;
     }
 
-    private function updateScore(Link $link)
+    private function updateLink(Link $link)
     {
-        $score = $this->getStory($link->article_id);
-        $link->points = $score['score'];
-        $link->save();
+        $params = $this->getStory($link->article_id);
+        if (!isset($params['url'])) {
+            $params['url'] = 'https://news.ycombinator.com/item?id=' . $link['id'];
+        }
+        $link->update([
+            'points' => $params['score'],
+            'title' => $params['title'],
+            'url' => $params['url']]);
+
     }
 
     private function getStory(string $story): array
