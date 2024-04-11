@@ -76,13 +76,7 @@ async function fetchData(url) {
 
 
 onMounted(() => {
-
-    store.dispatch('checkLogin')
-
-    if (store.getters.isLoggedIn) {
-        fetchData(props.fetchUrl);
-    } else router.push({name: 'login'})
-
+    fetchData(props.fetchUrl);
 });
 
 

@@ -87,7 +87,6 @@ const store = createStore({
                 await axios.get(context.state.checkUrl).then(({data}) => {
                     context.commit('SetUserName', data.name)
                 })
-
             } catch (error) {
                 context.commit('LogOut')
             }

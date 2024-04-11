@@ -31,10 +31,10 @@ Route::get('/api/v0/user', function () {
 })->middleware('auth')->name('check');
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('app');
 })->name('main');
 
 Route::fallback(function () {
-    return view('welcome');
+    return view('app');
 });
 

@@ -58,6 +58,7 @@ async function login() {
     await axios.post('/login', auth.value)
         .then(() => {
             store.commit('ClearErrors')
+            store.dispatch('checkLogin')
             router.push({name: 'articles'})
         })
         .catch(({response}) => {
@@ -72,7 +73,6 @@ async function login() {
         })
         .finally(() => {
             processing.value = false
-
         })
 
 

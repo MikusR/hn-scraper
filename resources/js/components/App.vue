@@ -48,7 +48,9 @@ const router = useRouter();
 onMounted(() => {
     store.dispatch('checkLogin')
 })
-
+if (store.getters.isLoggedIn) {
+    router.push({name: 'articles'})
+}
 
 async function logout() {
     axios.post('/logout')
