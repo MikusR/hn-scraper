@@ -84,16 +84,19 @@ async function fetchData(url) {
 }
 
 async function deleteSelectedRows() {
-    try {
-        dt.rows({selected: true}).every(function () {
-            let idx = tableData.value.indexOf(this.data());
-            tableData.value.splice(idx, 1);
-            axios.delete('/api/v0/delete-link/' + this.data().article_id)
-        })
+    if (confirm("Do you really want to delete?")) {
+        try {
+            dt.rows({selected: true}).every(function () {
+                let idx = tableData.value.indexOf(this.data());
+                tableData.value.splice(idx, 1);
+                axios.delete('/api/v0/delete-link/' + this.data().article_id)
+            })
 
-    } catch (error) {
-        console.error('Error:', error.message);
+        } catch (error) {
+            console.error('Error:', error.message);
+        }
     }
+
 }
 
 onMounted(() => {
