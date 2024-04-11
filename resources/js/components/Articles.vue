@@ -1,10 +1,14 @@
 <template>
     <div class="container">
-
-        <DataTable ref="hntable" :data="tableData" :columns="tableColumns" :options="options"
+        <button class="btn btn-danger btn-sm m-2" @click="deleteSelectedRows">Delete Selected Rows</button>
+        <DataTable ref="hntable"
+                   :data="tableData" :columns="tableColumns"
+                   :options="options"
                    class="table table-hover table-striped"
                    width="100%">
+
             <thead>
+
             <tr>
                 <th v-for="column in columns" :key="column"
                     class="">
@@ -12,7 +16,7 @@
                 </th>
             </tr>
             </thead>
-            <button class="btn btn-danger btn-sm" @click="deleteSelectedRows">Delete Selected Rows</button>
+
 
         </DataTable>
 
@@ -37,7 +41,7 @@ const store = useStore()
 const router = useRouter();
 
 const props = defineProps({
-    fetchUrl: {type: String, required: true},
+    fetchUrl: {type: String, required: true}
 })
 DataTable.use(DataTablesCore);
 
@@ -45,7 +49,7 @@ const columns = ['points', 'title', 'posted']
 const tableData = ref([]);
 const options = ref({
     order: [0, 'desc'],
-    select: true
+    select: true,
 });
 const tableColumns = ref([
 
@@ -84,25 +88,27 @@ async function fetchData(url) {
 }
 
 async function deleteSelectedRows() {
-    if (confirm("Do you really want to delete?")) {
-        try {
-            dt.rows({selected: true}).every(function () {
-                let idx = tableData.value.indexOf(this.data());
-                tableData.value.splice(idx, 1);
-                axios.delete('/api/v0/delete-link/' + this.data().article_id)
-            })
+    if (dt.rows({selected: true}).count() > 0) {
+        if (confirm("Do you really want to delete?")) {
+            try {
+                dt.rows({selected: true}).every(function () {
+                    let idx = tableData.value.indexOf(this.data());
+                    tableData.value.splice(idx, 1);
+                    axios.delete('/api/v0/delete-link/' + this.data().article_id)
+                })
 
-        } catch (error) {
-            console.error('Error:', error.message);
+            } catch (error) {
+                console.error('Error:', error.message);
+            }
         }
-    }
-
+    } else alert("Nothing selected, click on rows you want to delete");
 }
 
 onMounted(() => {
     store.commit('ClearErrors');
     fetchData(props.fetchUrl);
     dt = hntable.value.dt;
+    dt.select.style('multi');
 });
 
 
