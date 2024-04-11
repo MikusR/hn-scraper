@@ -25,6 +25,14 @@ Route::get('api/v0/last', function () {
 Route::get('api/v0/index', function () {
     return response()->json(Link::where('points', '>', 10)->orderBy('points', 'desc')->get());
 })->name('index')->middleware('auth');
+Route::delete('api/v0/delete-link/{link}', function (Link $link) {
+    try {
+        $link->delete();
+    } catch (\Exception $e) {
+        return response()->json($e->getMessage(), 418);
+    }
+    return response()->json(null);
+})->name('delete-link')->middleware('auth');
 
 Route::get('/api/v0/user', function () {
     return Auth::user();
