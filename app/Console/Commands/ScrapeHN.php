@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Link;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ScrapeHN extends Command
@@ -40,55 +42,43 @@ class ScrapeHN extends Command
     {
         $html = file_get_contents('https://news.ycombinator.com/');
         $crawler = new Crawler($html);
-//        return $crawler;
-//        dd($crawler->filterXPath('//tr[@class="athing"]/..')->children());
-        echo "<pre>";
-//        #hnmain > tbody > tr:nth-child(3) > td > table > tbody
-        $test = $crawler->filter('#hnmain > tbody > tr:nth-child(3) > td > table > tbody > tr');
-//        try {
-//            $test = $crawler->filterXPath('//*[@id="hnmain"]/tbody/tr[3]/td/table/tbody')->html();
-//        } catch (\Exception$e) {
-//
-//        }
-        foreach ($test as $element) {
-            var_dump($element->nodeValue);
-        }
-        dd($test);
-        dd($test->ownerDocument->saveHTML($test));
-//        dd($crawler->filterXPath('/html/body/center/table/tbody/tr[3]/td/table/tbody')->children()->count());
-        foreach ($crawler->filterXPath('//*[@id="hnmain"]/tbody/tr[3]/td/table/tbody')->children() as $element) {
-//            dd($element->ownerDocument->saveHTML($element));
-//            dd($element->childNodes);
+        $links = $crawler->filter('tr.athing');
+        if ($links->count() > 0) {
+            $links->each(function (Crawler $node) {
+                $titleNode = $node->filter('td.title > span.titleline > a');
+                $title = htmlspecialchars($titleNode->text());
+                $url = $titleNode->attr('href');
+                $etcNode = $node->nextAll()->filter('tr');
+                $score = (int)explode(" ", $etcNode->filter('span.score')->text())[0];
+                $date = $etcNode->filter('span.age')->attr('title');
+                $id = substr($etcNode->filter('span.age > a')->attr('href'), 8);
+                try {
+                    $link = Link::withTrashed()->findOrFail($id);
+                    if ($link->trashed()) {
+                        return;
+                    }
+                    $link->update([
+                        'points' => $score,
+                    ]);
+                } catch (ModelNotFoundException $e) {
+                    if (substr($url, 0, 4) == "item") {
+                        $url = "https://news.ycombinator.com/item?id=" . $id;
+                    }
+                    $test = Link::create([
+                        'article_id' => $id,
+                        'title' => $title,
+                        'url' => $url,
+                        'points' => $score,
+                        'date' => $date,
+                    ]);
 
-//            var_dump($element->childNodes->item(4)->nodeValue);
-//            foreach ($element->childNodes as $child) {
-//                var_dump($child->nodeValue);
-//            }
-            var_dump($element->childNodes->count());
-            if ($element->childNodes->count() === 5) {
-                $rowCrawler = new Crawler($element);
-                $title = htmlspecialchars($rowCrawler->filterXPath('//span[@class="titleline"]/a')->text());
-//                var_dump(htmlspecialchars($title));
-                $url = $rowCrawler->filterXPath('//span[@class="titleline"]/a')->attr('href');
-                echo "<a href=\"$url\">$title</a>";
-                echo "</br>";
-            }
-            if ($element->childNodes->count() === 2) {
-                $rowCrawler = new Crawler($element);
-                $age = $rowCrawler->filterXPath('//span[@class="age"]')->attr('title');
-//                dd($age);
-//                var_dump(htmlspecialchars($title));
-                $score = $rowCrawler->filterXPath('//span[@class="score"]')->text();
-                echo "<span>($score) $age</span>";
-                echo "</br>";
-            }
-            if ($element->childNodes->count() === 6) {
-                break;
-            }
+                }
 
-////            dd($element->ownerDocument->saveHTML($element));
+            });
 
         }
+
+
         return 0;
     }
 }

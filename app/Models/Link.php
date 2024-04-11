@@ -15,7 +15,7 @@ class Link extends Model
     protected $primaryKey = 'article_id';
     protected $casts = [
         'deleted' => 'boolean',
-        'date' => 'datetime',
+        'date' => 'datetime:Y-m-d H:i',
     ];
     protected $fillable = [
         'title',
@@ -23,13 +23,6 @@ class Link extends Model
         'points',
         'date',
     ];
-
-//    public function delete(): void
-//    {
-//        $this->deleted_at = now();
-//        $this->deleted_by = Auth::user()->id;
-//        $this->save();
-//    }
 
     public function scopeSearch($query, $keywords)
     {

@@ -41,7 +41,7 @@ const props = defineProps({
 })
 DataTable.use(DataTablesCore);
 
-const columns = ['points', 'title', 'article_id']
+const columns = ['points', 'title', 'posted']
 const tableData = ref([]);
 const options = ref({
     order: [0, 'desc'],
@@ -57,9 +57,9 @@ const tableColumns = ref([
             }
         },
         {
-            data: 'article_id', width: '10%',
+            data: null, width: '14%',
             render: function (data, type, row, meta) {
-                return '<a href="https://news.ycombinator.com/item?id=' + data + '" target="_blank">' + data + '</a>';
+                return '<a href="https://news.ycombinator.com/item?id=' + row.article_id + '" target="_blank">' + row.date + '</a>';
             }
         },
     ]
