@@ -61,7 +61,9 @@ const auth = ref({
 })
 
 const processing = ref(false)
-
+onMounted(() => {
+    store.commit('ClearErrors');
+})
 
 async function register() {
     processing.value = true

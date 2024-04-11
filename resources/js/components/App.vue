@@ -46,6 +46,8 @@ const router = useRouter();
 
 
 onMounted(() => {
+    store.commit('ClearErrors');
+
     store.dispatch('checkLogin')
 })
 if (store.getters.isLoggedIn) {
