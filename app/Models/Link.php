@@ -25,7 +25,7 @@ class Link extends Model
 
     public function scopeSearch($query, $keywords)
     {
-        return $query->where('title', 'LIKE', '%' . $keywords . '%');
+        return $query->where('title', 'LIKE', '%'.$keywords.'%');
     }
-    
+
 }
