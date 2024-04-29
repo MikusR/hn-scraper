@@ -10,7 +10,7 @@ class LinkController extends Controller
 {
     public function index(): JsonResponse
     {
-        $links = Link::where('points', '>', 10)->orderBy('points', 'desc')->get();
+        $links = Link::where('points', '>', 100)->orderBy('points', 'desc')->get();
         return response()->json($links);
     }
 

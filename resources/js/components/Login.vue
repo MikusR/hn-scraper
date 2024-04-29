@@ -11,8 +11,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" v-model="auth.password" name="password"
-                           id="password">
+                    <input class="form-control" type="password" v-model="auth.password" name="password" id="password">
                 </div>
 
                 <button type="submit" :disabled="processing" class="btn btn-primary ">
