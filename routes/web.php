@@ -18,10 +18,10 @@ Route::get('/test', function () {
     echo base_path() . "<br>";
 
 
-// $dbtest = base_path('app')."/persistent-db/db.txt";
-// file_put_contents($dbtest, "test");
-// echo "dbtest= ".$dbtest . "<br>";
-// echo file_get_contents($dbtest);
+$dbtest = base_path() . "/persistent-db/db.txt";
+file_put_contents($dbtest, "test");
+echo "dbtest= ".$dbtest . "<br>";
+echo file_get_contents($dbtest);
 
 });
 
