@@ -15,12 +15,13 @@ Route::get('/test', function () {
     echo 'Current directory: ' . getcwd() . "<br>";
     echo 'PHP version: ' . phpversion() . "<br>";
     echo base_path('app') . "<br>";
+    echo base_path() . "<br>";
 
 
-$dbtest = base_path('app')."/persistent-db/db.txt";
-file_put_contents($dbtest, "test");
-echo "dbtest= ".$dbtest . "<br>";
-echo file_get_contents($dbtest);
+// $dbtest = base_path('app')."/persistent-db/db.txt";
+// file_put_contents($dbtest, "test");
+// echo "dbtest= ".$dbtest . "<br>";
+// echo file_get_contents($dbtest);
 
 });
 
