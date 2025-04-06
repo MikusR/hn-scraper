@@ -27,6 +27,12 @@ use Composer to get dependencies
 $ composer install
 ```
 
+generate Laravel app key
+
+```bash
+php artisan key:generate
+```
+
 use npm to get dependencies for Vue
 
 ```bash
@@ -74,7 +80,7 @@ crontab -e
 ```
 
 ```cronexp
-* * * * * cd /{your path} && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd {your path} && php artisan schedule:run >> /dev/null 2>&1
 ```
 
 ## Commands

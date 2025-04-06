@@ -1,24 +1,18 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>hn-scraper</title>
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    {{--    <link href="https://cdn.datatables.net/2.0.3/css/dataTables.tailwindcss.css" rel="stylesheet">--}}
-    {{--    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.tailwindcss.js"></script>--}}
+
 
 </head>
 <body class="min-h-screen grid">
-<div id="app">
-    <data-table fetch-url="{{ route('index') }}"
-                :columns="['points','title', 'article_id']"></data-table>
-
+<div id="app"
+     data-url="{{ route('index') }}"
+     data-check-url="{{ route('check') }}">
 </div>
 <script src="{{ mix('js/app.js') }}"></script>
-
-
 </body>
 </html>
