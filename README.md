@@ -7,80 +7,52 @@ component.
 
 ![](images/main.png "Main screen of application")
 
+## changes
+
+2025-04-06 updated PHP to 8.2, Laravel to 12
+
+## todo
+
+migrate to Laravel 11 slimmer structure
+
 ## Requirements
 
-- PHP 7.4
+- PHP 8.2
 - MySQL (tested on 8.0.35) or SQLite
 - Node.js 20
 
 ## Install
 
-clone repository
+currently supports running on coolify with sqlite
 
-```bash
-$ git clone https://github.com/MikusR/hn-scraper.git
+1. add application
+2. git url <https://github.com/MikusR/hn-scraper.git>
+3. nixpacks as Build Pack
+4. add peristent storage volume mounted, for example, /app/persistent-db
+5. add environment variables
+
+```conf
+APP_DEBUG=false
+APP_ENV=production
+APP_KEY=63c9b80ac2085916364e2e9340423d8f
+APP_URL=https://[YOUR_URL]
+DB_CONNECTION=sqlite
+DB_DATABASE=/app/persistent-db/database.sqlite
 ```
 
-use Composer to get dependencies
+6. add scheduled task recommended (\* \* \* \* \*)
 
 ```bash
-$ composer install
+php artisan schedule:run
 ```
 
-generate Laravel app key
+7. fix permissions
 
 ```bash
-php artisan key:generate
-```
-
-use npm to get dependencies for Vue
-
-```bash
-$ npm install
-```
-
-build assets
-
-```bash
-$ npm run production
-```
-
-copy .env.example to .env
-and configure access to database
-for example:
-
-```ini
-DB_CONNECTION = sqlite
-DB_HOST = 127.0.0.1
-DB_PORT = 3306
-```
-
-If using sqlite
-
-```bash
-touch database/database.sqlite
-```
-
-Run artisan migrate to create database tables
-
-```bash
+touch persistent-db/database.sqlite
 php artisan migrate
-```
-
-run
-
-```bash
-php artisan serve
-```
-
-add cron job to run schedule
-
-```bash
-crontab -e
-```
-
-```cronexp
-* * * * * cd {your path} && php artisan schedule:run >> /dev/null 2>&1
+chmod 777 persistent-db
+chown "www-data":"www-data" persistent-db/database.sqlite
 ```
 
 ## Commands
