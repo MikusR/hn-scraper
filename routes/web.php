@@ -11,5 +11,9 @@ Route::group(['prefix' => 'api/v0', 'middleware' => ['auth']], function () {
     Route::get('/user', [LinkController::class, 'checkUser'])->name('check');
 });
 
+Route::get('/test', function () {
+    echo get_current_user();
+});
+
 Route::fallback([AppController::class, 'main']);
 
