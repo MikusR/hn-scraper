@@ -10,20 +10,5 @@ Route::group(['prefix' => 'api/v0', 'middleware' => ['auth']], function () {
     Route::get('/user', [LinkController::class, 'checkUser'])->name('check');
 });
 
-Route::get('/test', function () {
-    echo get_current_user() . "<br>";
-    echo 'Current directory: ' . getcwd() . "<br>";
-    echo 'PHP version: ' . phpversion() . "<br>";
-    echo base_path('app') . "<br>";
-    echo base_path() . "<br>";
-
-
-$dbtest = base_path() . "/persistent-db/db.txt";
-file_put_contents($dbtest, "test");
-echo "dbtest= ".$dbtest . "<br>";
-echo file_get_contents($dbtest);
-
-});
-
 Route::fallback([AppController::class, 'main']);
 
