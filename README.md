@@ -9,6 +9,8 @@ component.
 
 ## changes
 
+2025-09-30 dependency updates. Added healthcheck, first pass at Laravel Mix to Vite migration.
+
 2025-04-06 updated PHP to 8.2, Laravel to 12
 
 ## todo
