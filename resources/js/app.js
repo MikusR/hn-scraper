@@ -1,13 +1,13 @@
 import axios from "axios";
 
-require('./bootstrap');
+import './bootstrap'
 import 'bootstrap';
-import {createApp, ref} from 'vue'
+import {createApp} from 'vue'
 import {createRouter, createWebHistory} from 'vue-router'
 import App from './components/App.vue'
-import Articles from './components/Articles'
-import Login from './components/Login'
-import Register from './components/Register'
+import Articles from './components/Articles.vue'
+import Login from './components/Login.vue'
+import Register from './components/Register.vue'
 import {createStore} from 'vuex'
 
 const url = document.getElementById('app').getAttribute('data-url')

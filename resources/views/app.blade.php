@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>hn-scraper</title>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @vite('resources/sass/app.scss')
 
 
 </head>
@@ -13,6 +13,6 @@
      data-url="{{ route('index') }}"
      data-check-url="{{ route('check') }}">
 </div>
-<script src="{{ mix('js/app.js') }}"></script>
+@vite('resources/js/app.js')
 </body>
 </html>
