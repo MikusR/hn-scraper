@@ -13,7 +13,8 @@ component.
 
 ## todo
 
-migrate to Laravel 11 slimmer structure
+- Migrate to Laravel 11 slimmer structure
+- Add pagination to backend as currently api returns one big json
 
 ## Requirements
 
@@ -74,3 +75,7 @@ php artisan scrape:fromapi new
 ```
 
 Default schedule gets `new` stories every hour and `best` and `top` every couple hours
+
+## Implementation
+- [get data from api and populate DB](https://github.com/MikusR/hn-scraper/blob/main/app/Console/Commands/GetHNFromApi.php)
+- [Vue SPA](https://github.com/MikusR/hn-scraper/blob/main/resources/js/app.js)
