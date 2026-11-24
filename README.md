@@ -20,7 +20,7 @@ component.
 
 ## Requirements
 
-- PHP 8.2
+- PHP 8.4.1 or newer in the 8.x series
 - MySQL (tested on 8.0.35) or SQLite
 - Node.js 20
 
